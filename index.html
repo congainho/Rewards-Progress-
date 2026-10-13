@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nội Quy & Phần Thưởng Gia Đình - Bé Diệp Trang</title>
+    <style>
+        :root {
+            --primary: #00b4d8;
+            --primary-dark: #0077b6;
+            --secondary: #ffb703;
+            --accent: #fb8500;
+            --bg-color: #e0f7fa;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+            --success: #38b000;
+            --danger: #d90429;
+            --warning: #ff9f1c;
+            --gray: #8d99ae;
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .author-tag {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.25);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .child-info {
+            text-align: left;
+        }
+
+        .child-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            border-bottom: 2px dashed white;
+            color: white;
+            padding: 2px 5px;
+            cursor: pointer;
+        }
+
+        .child-name:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .badges-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            background: var(--secondary);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .badge-money {
+            background: #2a9d8f;
+            color: white;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .date-picker {
+            font-size: 1rem;
+            padding: 8px 12px;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            outline: none;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #e9ecef;
+            color: var(--text-color);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lock-banner {
+            background: #fff3cd;
+            border: 1px solid #ffe3a8;
+            color: #856404;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .category-title {
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-label {
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .task-stars {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 0.85rem;
+            background: #fff8e7;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            white-space: nowrap;
+        }
+
+        .checkbox-custom {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .task-checkbox:checked + .checkbox-custom {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .task-checkbox:checked + .checkbox-custom::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .task-checkbox {
+            display: none;
+        }
+
+        .task-checkbox:disabled + .checkbox-custom {
+            background-color: #e9ecef;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-lock {
+            background: linear-gradient(135deg, #e63946, #d90429);
+            color: white;
+            box-shadow: 0 4px 10px rgba(217, 4, 41, 0.3);
+        }
+
+        .btn-lock:disabled {
+            background: var(--gray);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, var(--warning), #f77f00);
+            color: white;
+            box-shadow: 0 4px 10px rgba(247, 127, 0, 0.3);
+        }
+
+        .btn-reset-all {
+            background: #6c757d;
+            color: white;
+        }
+
+        .summary-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .milestones-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .milestone-item {
+            margin-bottom: 10px;
+        }
+
+        .milestone-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .progress-bar-bg {
+            background: #e9ecef;
+            height: 22px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .reward-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .reward-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+
+        .reward-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .reward-title {
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        .reward-cost {
+            color: var(--primary-dark);
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .btn-redeem {
+            background: var(--secondary);
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-redeem:disabled {
+            background: #e0e0e0;
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .modal-message {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        canvas#fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="fireworks"></canvas>
+
+    <header>
+        <div class="author-tag">Prepared by Mẹ Minh</div>
+        <h1>NỘI QUY & PHẦN THƯỞNG GIA ĐÌNH</h1>
+        <div class="profile-section">
+            <div class="avatar">👧</div>
+            <div class="child-info">
+                <div>Bé: <input type="text" id="childNameInput" class="child-name" value="Diệp Trang"></div>
+                <div class="badges-container">
+                    <div class="badge-item">Tích lũy: <span id="totalStarsCount">0</span> ⭐</div>
+                    <div class="badge-item badge-money">Hũ heo đất: <span id="totalMoneyCount">0</span> đ</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="controls">
+        <input type="date" id="datePicker" class="date-picker">
+        <div class="tab-buttons">
+            <button class="tab-btn active" id="tabScoring" onclick="switchTab('scoring')">📝 Chấm điểm</button>
+            <button class="tab-btn" id="tabRewards" onclick="switchTab('rewards')">🎁 Cửa hàng quà & Mục tiêu</button>
+        </div>
+    </div>
+
+    <main id="scoringTab">
+        <div id="lockStatusBanner" class="lock-banner" style="display: none;">
+            <span>🔒 Ngày này đã được khóa điểm. Không thể chỉnh sửa!</span>
+        </div>
+        <div id="taskList"></div>
+        <div class="action-container">
+            <button class="btn-action btn-lock" id="btnLockDay" onclick="lockCurrentDay()">🔒 Hoàn Thành & Khóa Ngày</button>
+            <button class="btn-action btn-refresh" onclick="refreshAndUnlockDay()">🔄 Đặt lại (Mở khóa)</button>
+            <button class="btn-action btn-reset-all" onclick="resetAllData()">🗑️ Reset Toàn Bộ</button>
+        </div>
+    </main>
+
+    <main id="rewardsTab" style="display: none;">
+        <div class="milestones-section">
+            <div class="summary-header">🎯 Mục Tiêu Lớn Gia Đình</div>
+            <div class="milestone-item">
+                <div class="milestone-title">
+                    <span>⛩️ Tích lũy quỹ đi du lịch Nhật Bản</span>
+                    <span><span id="japanMoney">0</span> / 40,000,000 đ</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="japanBar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="reward-grid" id="rewardList"></div>
+    </main>
+
+    <div class="modal-overlay" id="messageModal">
+        <div class="modal">
+            <div class="modal-icon" id="modalIcon">🌟</div>
+            <div class="modal-title" id="modalTitle">Khen ngợi</div>
+            <div class="modal-message" id="modalMessage">Mẹ Minh rất tự hào về con!</div>
+            <button class="btn-close" onclick="closeModal()">Cảm ơn Mẹ ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_CATEGORIES = [
+            {
+                title: "☀️ Nếp sống & Tự lập",
+                tasks: [
+                    { id: "life_1", name: "Thức dậy đúng giờ", stars: 1 },
+                    { id: "life_2", name: "Tự vệ sinh cá nhân", stars: 1 },
+                    { id: "life_3", name: "Gấp chăn màn ngăn nắp", stars: 1 }
+                ]
+            },
+            {
+                title: "📚 Học tập & Rèn luyện",
+                tasks: [
+                    { id: "study_0", name: "Thi Movers được 15/15 khiên", stars: 100 },
+                    { id: "study_1", name: "Hoàn thành bài tập về nhà theo dặn dò của cô", stars: 2 },
+                    { id: "study_2", name: "Hoàn thành bài tập Toán mẹ cho", stars: 2 },
+                    { id: "study_3", name: "Tập đàn tối thiểu 20 phút/ ngày", stars: 2 },
+                    { id: "study_4", name: "Đọc sách 15 phút", stars: 1 },
+                    { id: "study_5", name: "Hoàn thành bài tập tiếng Anh trên Tak12", stars: 2 },
+                    { id: "study_6", name: "Hoàn thành bài tập tiếng Anh trên sách", stars: 2 },
+                    { id: "study_7", name: "Hoàn thành bài tập chính tả hoặc tiếng Việt", stars: 2 },
+                    { id: "study_8", name: "Viết chữ sạch đẹp, đúng chính tả", stars: 2 },
+                    { id: "study_9", name: "Học thuộc 5 từ vựng mới", stars: 3 }
+                ]
+            },
+            {
+                title: "🧹 Việc nhà & Trách nhiệm",
+                tasks: [
+                    { id: "house_1", name: "Dọn dẹp đồ chơi/bàn học", stars: 3 },
+                    { id: "house_2", name: "Phụ giúp bố mẹ dọn cơm/rửa bát", stars: 3 }
+                ]
+            },
+            {
+                title: "🌟 Thái độ & Ứng xử",
+                tasks: [
+                    { id: "attitude_1", name: "Lễ phép, chào hỏi ngoan ngoãn", stars: 1 },
+                    { id: "attitude_2", name: "Không ghen tị/tranh giành", stars: 1 },
+                    { id: "attitude_3", name: "Trung thực, biết nhận lỗi", stars: 2 }
+                ]
+            }
+        ];
+
+        const DEFAULT_REWARDS = [
+            { id: "reward_piggy", title: "Đút Ống Heo Tích Lũy 🐷", cost: 10, money: 20000, icon: "💰", isPiggy: true },
+            { id: "reward_1", title: "Xem Youtube Kids hoặc Tivi", cost: 150, icon: "📺" },
+            { id: "reward_2", title: "Đi Long Hải tắm biển & xe điện", cost: 500, icon: "🏖️" },
+            { id: "reward_3", title: "Món quà bất ngờ từ Mẹ", cost: 700, icon: "🎁" }
+        ];
+
+        const MOTIVATION_MESSAGES = [
+            "Mẹ Minh rất tự hào vì con đã hoàn thành xuất sắc các mục tiêu hôm nay! 💖",
+            "Hôm nay bé làm rất tốt! Hãy tiếp tục phát huy vào ngày mai nhé! 🌟",
+            "Con ngày càng tự lập và ngoan ngoãn hơn rồi đấy! Mẹ yêu con rất nhiều! 🥰"
+        ];
+
+        let appState = {
+            childName: "Diệp Trang",
+            totalStars: 0,
+            savedMoney: 0,
+            dailyLogs: {}
+        };
+
+        let selectedDate = new Date().toISOString().split('T')[0];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            document.getElementById('datePicker').value = selectedDate;
+            document.getElementById('childNameInput').value = appState.childName;
+
+            document.getElementById('datePicker').addEventListener('change', (e) => {
+                selectedDate = e.target.value;
+                renderScoringTab();
+            });
+
+            document.getElementById('childNameInput').addEventListener('change', (e) => {
+                appState.childName = e.target.value;
+                saveState();
+            });
+
+            renderScoringTab();
+            renderRewardsTab();
+            updateHeaderBadges();
+        });
+
+        function loadState() {
+            const saved = localStorage.getItem('familyRuleState_v6');
+            if (saved) {
+                try { appState = JSON.parse(saved); } catch (e) {}
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('familyRuleState_v6', JSON.stringify(appState));
+            updateHeaderBadges();
+        }
+
+        function updateHeaderBadges() {
+            document.getElementById('totalStarsCount').innerText = appState.totalStars;
+            document.getElementById('totalMoneyCount').innerText = appState.savedMoney.toLocaleString('vi-VN');
+            updateMilestones();
+        }
+
+        function renderScoringTab() {
+            const container = document.getElementById('taskList');
+            container.innerHTML = '';
+            const dayData = appState.dailyLogs[selectedDate] || { tasks: {}, isLocked: false };
+            const isLocked = dayData.isLocked;
+
+            document.getElementById('lockStatusBanner').style.display = isLocked ? 'flex' : 'none';
+            const btnLock = document.getElementById('btnLockDay');
+            btnLock.disabled = isLocked;
+            btnLock.innerText = isLocked ? '🔒 Ngày Này Đã Được Khóa' : '🔒 Hoàn Thành & Khóa Ngày';
+
+            DEFAULT_CATEGORIES.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                let html = `<div class="category-title">${cat.title}</div>`;
+
+                cat.tasks.forEach(task => {
+                    const isChecked = !!dayData.tasks[task.id];
+                    html += `
+                        <div class="task-item">
+                            <label class="task-label" for="${task.id}">
+                                <span>${task.name}</span>
+                                <span class="task-stars">+${task.stars} ⭐</span>
+                            </label>
+                            <input type="checkbox" id="${task.id}" class="task-checkbox" 
+                                ${isChecked ? 'checked' : ''} ${isLocked ? 'disabled' : ''}
+                                onchange="toggleTask('${task.id}', ${task.stars}, this.checked)">
+                            <label for="${task.id}" class="checkbox-custom"></label>
+                        </div>
+                    `;
+                });
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleTask(taskId, starValue, isChecked) {
+            if (!appState.dailyLogs[selectedDate]) {
+                appState.dailyLogs[selectedDate] = { tasks: {}, isLocked: false };
+            }
+            const dayData = appState.dailyLogs[selectedDate];
+            if (dayData.isLocked) return;
+
+            if (isChecked) {
+                dayData.tasks[taskId] = true;
+                appState.totalStars += starValue;
+            } else {
+                delete dayData.tasks[taskId];
+                appState.totalStars = Math.max(0, appState.totalStars - starValue);
+            }
+            saveState();
+            renderRewardsTab();
+        }
+
+        function lockCurrentDay() {
+            if (!appState.dailyLogs[selectedDate]) {
+                appState.dailyLogs[selectedDate] = { tasks: {}, isLocked: false };
+            }
+            appState.dailyLogs[selectedDate].isLocked = true;
+            saveState();
+            renderScoringTab();
+            triggerFireworks();
+            const randomMsg = MOTIVATION_MESSAGES[Math.floor(Math.random() * MOTIVATION_MESSAGES.length)];
+            showModal("🔒 ĐÃ KHÓA ĐIỂM HÔM NAY", randomMsg, "🎉");
+        }
+
+        function refreshAndUnlockDay() {
+            if (confirm("Mở khóa và làm mới lại điểm của ngày này?")) {
+                const dayData = appState.dailyLogs[selectedDate];
+                if (dayData) {
+                    DEFAULT_CATEGORIES.forEach(cat => {
+                        cat.tasks.forEach(task => {
+                            if (dayData.tasks[task.id]) {
+                                appState.totalStars = Math.max(0, appState.totalStars - task.stars);
+                            }
+                        });
+                    });
+                    appState.dailyLogs[selectedDate] = { tasks: {}, isLocked: false };
+                    saveState();
+                    renderScoringTab();
+                    renderRewardsTab();
+                }
+            }
+        }
+
+        function resetAllData() {
+            if (confirm("⚠️ Xóa toàn bộ số sao và lịch sử?")) {
+                appState = { childName: "Diệp Trang", totalStars: 0, savedMoney: 0, dailyLogs: {} };
+                saveState();
+                renderScoringTab();
+                renderRewardsTab();
+            }
+        }
+
+        function renderRewardsTab() {
+            const container = document.getElementById('rewardList');
+            container.innerHTML = '';
+            DEFAULT_REWARDS.forEach(reward => {
+                const canRedeem = appState.totalStars >= reward.cost;
+                const card = document.createElement('div');
+                card.className = 'reward-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="reward-icon">${reward.icon}</div>
+                        <div class="reward-title">${reward.title}</div>
+                        <div class="reward-cost">${reward.cost} ⭐ ${reward.isPiggy ? '(= 20,000 đ)' : ''}</div>
+                    </div>
+                    <button class="btn-redeem" ${canRedeem ? '' : 'disabled'} onclick="redeemReward('${reward.id}')">
+                        ${canRedeem ? 'Đổi Ngay 🎁' : 'Chưa Đủ Sao'}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+            updateMilestones();
+        }
+
+        function redeemReward(rewardId) {
+            const reward = DEFAULT_REWARDS.find(r => r.id === rewardId);
+            if (!reward || appState.totalStars < reward.cost) return;
+            appState.totalStars -= reward.cost;
+            if (reward.isPiggy) {
+                appState.savedMoney += reward.money;
+                showModal("🐷 ĐÚT ỐNG HEO THÀNH CÔNG!", `Đã quy đổi 10 ⭐ thành 20,000 VNĐ vào hũ heo đất!`, "💰");
+            } else {
+                showModal("🎉 ĐỔI QUÀ THÀNH CÔNG!", `Đã đổi quà: "${reward.title}".`, "🎁");
+            }
+            saveState();
+            renderRewardsTab();
+            triggerFireworks();
+        }
+
+        function updateMilestones() {
+            const currentMoney = appState.savedMoney;
+            document.getElementById('japanMoney').innerText = `${currentMoney.toLocaleString('vi-VN')} đ`;
+            const japanPercent = Math.min(100, (currentMoney / 40000000) * 100);
+            document.getElementById('japanBar').style.width = `${japanPercent}%`;
+        }
+
+        function switchTab(tabName) {
+            document.getElementById('scoringTab').style.display = tabName === 'scoring' ? 'block' : 'none';
+            document.getElementById('rewardsTab').style.display = tabName === 'rewards' ? 'block' : 'none';
+            document.getElementById('tabScoring').classList.toggle('active', tabName === 'scoring');
+            document.getElementById('tabRewards').classList.toggle('active', tabName === 'rewards');
+        }
+
+        function showModal(title, message, icon = "🌟") {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('modalIcon').innerText = icon;
+            document.getElementById('messageModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('messageModal').classList.remove('active');
+        }
+
+        function triggerFireworks() {
+            const canvas = document.getElementById('fireworks');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            const colors = ['#ffb703', '#00b4d8', '#ff4d6d', '#38b000', '#7209b7'];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x: canvas.width / 2, y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    radius: Math.random() * 4 + 2, alpha: 1
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
+                    if (p.alpha > 0) {
+                        alive = true;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.alpha;
+                        ctx.fill();
+                    }
+                });
+                if (alive) requestAnimationFrame(animate);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
